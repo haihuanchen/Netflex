@@ -4,10 +4,9 @@ import "./Row.css";
 
 const baseURL= "https://image.tmdb.org/t/p/original";
 
-function Row({ title, fetchUrl }) {
+function Row({ title, fetchUrl, isLargeRow }) {
     const [movies, setMovies] = useState([]);
 
-    //A snippet of code which runs based on a specific condition
     useEffect(()=>{
         async function fetchData(){
             const request = await axios.get(fetchUrl);
@@ -23,7 +22,12 @@ function Row({ title, fetchUrl }) {
 
             <div className="row-posters">
                 {movies.map(movie => (
-                    <img key={movie.id} className="row-poster" src={`${baseURL}${movie.poster_path}`} alt={movie.name}/>
+                    <img 
+                        key={movie.id} 
+                        className={`row-poster ${isLargeRow && "row-posterLarge"}` }
+                        src={`${baseURL}${isLargeRow ? movie.poster_path : movie.backdrop_path}`} 
+                        alt={movie.name}
+                    />
                 ))}
             </div>
         </div>
